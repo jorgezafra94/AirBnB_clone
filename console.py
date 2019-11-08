@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 import cmd
+import sys
 
 
-class HBNB(cmd.Cmd):
+class HBNBCommand(cmd.Cmd):
     """Console"""
-    prompt = "(hbtn)"
+    prompt = "(hbtn) "
 
     def do_EOF(self, args):
         """ Console exit when EOF\n """
@@ -16,9 +17,9 @@ class HBNB(cmd.Cmd):
 
     def emptyline(self):
         """ Does not perform any action """
-        pass
+        return (False)
 
 if __name__ == '__main__':
     """ Main """
-    console = HBNB()
+    console = HBNBCommand()
     console.cmdloop()

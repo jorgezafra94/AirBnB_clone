@@ -21,7 +21,11 @@ class HBNBCommand(cmd.Cmd):
         return (False)
 
     def do_create(self, args):
-        """ Creates an object using the BaseModel """
+        """
+        Creates an object using the BaseModel
+        eval the class if it exist or not
+        var = eval("BaseModel") is the same as var = Basemodel()
+        """
         if args is None or len(args) == 0:
             print("** class name missing **")
         else:

@@ -9,13 +9,22 @@ from datetime import datetime
 
 class BaseModel:
     """Defines the common attributes of new objects"""
-    def __init__(self, name='', my_number=0, id='', created='', updated=''):
+    def __init__(self, *args, **kwargs):
         """Class constructor"""
-        self.name = name
-        self.my_number = my_number
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        if kwargs is not None and len(kwargs) != 0:
+            for key, value in kwargs.items():
+                if key != '__class__':
+                    if key == 'created_at' or key == 'updated_at':
+                        setattr(self, key, datetime.strptime(
+                            value, "%Y-%m-%dT%H:%M:%S.%f"))
+                    else:
+                        setattr(self, key, value)
+        else:
+            self.name = ''
+            self.my_number = 0
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def save(self):
         """Saves the object"""
@@ -35,7 +44,7 @@ class BaseModel:
         var = self.__dict__
         for elem in var:
             if elem == 'created_at' or elem == 'updated_at':
-                new[elem] = var[elem].strftime("%Y-%m-%dT%H:%M:%S.%f")
+                new[elem] = var[elem].isoformat()
             else:
                 new[elem] = var[elem]
         new['__class__'] = self.__class__.__name__

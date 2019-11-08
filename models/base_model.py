@@ -5,6 +5,7 @@ Parent class BaseModel
 
 import uuid
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -25,11 +26,14 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
+
 
     def save(self):
         """Saves the object"""
         value = datetime.now()
         setattr(self, 'updated_at', value)
+        models.storage.save()
 
     def __str__(self):
         """Returns specific info"""

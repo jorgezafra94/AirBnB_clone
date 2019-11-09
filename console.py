@@ -1,9 +1,19 @@
 #!/usr/bin/python3
 import cmd
 import sys
+import shlex
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 import models
 import json
+
+classes = {'BaseModel': BaseModel, 'User': User, 'State': State, 'City': City,
+           'Amenity': Amenity, 'Place': Place, 'Review': Review}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -31,11 +41,11 @@ class HBNBCommand(cmd.Cmd):
         if args is None or len(args) == 0:
             print("** class name missing **")
         else:
-            try:
+            if args in classes:
                 new = eval(str(args) + "()")
                 new.save()
                 print(new.id)
-            except:
+            else:
                 print("** class doesn't exist **")
 
     def do_show(self, args):
@@ -108,8 +118,10 @@ class HBNBCommand(cmd.Cmd):
             try:
                 line = args.split()
                 eval(line[0])
-                for key in objects:
-                    objList.append(str(objects[key]))
+                for elem in objects:
+                    aux = objects[elem].to_dict()
+                    if aux['__class__'] == line[0]:
+                        objList.append(str(objects[elem]))
                 print(objList)
             except:
                 print("** class doesn't exist **")
@@ -119,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
         Updates an instance based on the class name and id by adding
         or updating attribute
         """
-        line = args.split()
+        line = shlex.split(args)
         if len(line) == 0:
             print("** class name missing **")
         else:
@@ -142,7 +154,7 @@ class HBNBCommand(cmd.Cmd):
                         if len(line) == 3:
                             print("** value missing **")
                         else:
-                            setattr(objects[key], line[2], json.loads(line[3]))
+                            setattr(objects[key], line[2], line[3])
                             models.storage.save()
 
 if __name__ == '__main__':

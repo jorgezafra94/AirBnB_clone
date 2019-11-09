@@ -49,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
         if args is None or len(args) == 0:
             print("** class name missing **")
         else:
-            line = args.split(' ')
+            line = args.split()
 
             if len(line) < 2:
                 print("""** instance id missing **""")
@@ -74,7 +74,7 @@ class HBNBCommand(cmd.Cmd):
         if args is None or len(args) == 0:
             print("** class name missing **")
         else:
-            line = args.split(' ')
+            line = args.split()
 
             if len(line) < 2:
                 print("""** instance id missing **""")
@@ -106,13 +106,44 @@ class HBNBCommand(cmd.Cmd):
             print(objList)
         else:
             try:
-                line = args.split(" ")
+                line = args.split()
                 eval(line[0])
                 for key in objects:
                     objList.append(str(objects[key]))
                 print(objList)
             except:
                 print("** class doesn't exist **")
+
+    def do_update(self, args):
+        """
+        Updates an instance based on the class name and id by adding
+        or updating attribute
+        """
+        line = args.split()
+        if len(line) == 0:
+            print("** class name missing **")
+        else:
+            try:
+                eval(str(line[0]))
+            except:
+                print("** class doesn't exist **")
+                return
+            if len(line) == 1:
+                print("** instance id missing **")
+            else:
+                objects = models.storage.all()
+                key = str(line[0]) + "." + str(line[1])
+                if key not in objects:
+                    print("** no instance found **")
+                else:
+                    if len(line) == 2:
+                        print("** attribute name missing **")
+                    else:
+                        if len(line) == 3:
+                            print("** value missing **")
+                        else:
+                            setattr(objects[key], line[2], json.loads(line[3]))
+                            models.storage.save()
 
 if __name__ == '__main__':
     """ Main """

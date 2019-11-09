@@ -60,12 +60,12 @@ class HBNBCommand(cmd.Cmd):
                     if key in objects:
                         print(objects[key])
                     else:
-                        raise KeyError()
+                        print("** no instance found **")
                 except:
                     print("** class doesn't exist **")
 
     def do_destroy(self, args):
-        """hola si"""
+        """delete the object and update json file"""
         if args is None or len(args) == 0:
             print("** class name missing **")
         else:
@@ -82,13 +82,32 @@ class HBNBCommand(cmd.Cmd):
                         del(objects[key])
                         new = {}
                         for elem in objects:
-                            new[elem] = objects[elem].to_dict()
+                            new[elem] = str(objects[elem])
                         with open("file.json", 'w') as fd:
                             fd.write(json.dumps(new))
                     else:
                         print("** no instance found **")
                 except:
                     print("** class doesn't exist **")
+
+    def do_all(self, args):
+        """Prints all string representation of all instances based or not
+        on the class name"""
+        objects = models.storage.all()
+        objList = []
+        if args is "":
+            for key in objects:
+                objList.append(str(objects[key]))
+            print(objList)
+        try:
+            line = args.split(" ")
+            eval(line[0])
+            for key in objects:
+                objList.append(str(objects[key]))
+            print(objList)
+        except:
+            print("** class doesn't exist **")
+
 if __name__ == '__main__':
     """ Main """
     console = HBNBCommand()

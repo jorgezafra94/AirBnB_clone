@@ -5,6 +5,9 @@ File storage
 import json
 import os
 from models.base_model import BaseModel
+from models.user import User
+
+classes = {'BaseModel': BaseModel, 'User': User}
 
 
 class FileStorage:
@@ -35,4 +38,5 @@ class FileStorage:
                 var = fd.read()
                 var = json.loads(var)
                 for elem in var:
-                    self.__objects[elem] = BaseModel(**(var[elem]))
+                    aux = classes[var[elem]['__class__']]
+                    self.__objects[elem] = aux(**(var[elem]))

@@ -157,6 +157,21 @@ class HBNBCommand(cmd.Cmd):
                             setattr(objects[key], line[2], line[3])
                             models.storage.save()
 
+    def do_count(self, args):
+        """Count the number of type of class"""
+        print("vamos a contar!!")
+
+    def default(self, args):
+        """Handle the prefix"""
+        line = args.split('.')
+        if len(line) >= 2:
+            if line[1] == 'all()':
+                self.do_all(line[0])
+            elif line[1] == 'count()':
+                self.do_count(line[0])
+        else:
+            return cmd.Cmd.default(self, args)
+
 if __name__ == '__main__':
     """ Main """
     console = HBNBCommand()

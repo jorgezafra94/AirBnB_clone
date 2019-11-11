@@ -78,3 +78,14 @@ class BaseModelTest(unittest.TestCase):
         self.assertEqual(model_dict["created_at"], self.my_model.created_at.strftime(t_format))
         self.assertEqual(model_dict["updated_at"], self.my_model.updated_at.strftime(t_format))
 
+    def test_from_dict_to_BaseModel(self):
+        """Test if we can create an instance from a dictionary"""
+        my_model_json = self.my_model.to_dict()
+        my_new_model = BaseModel(**my_model_json)
+        self.assertTrue(isinstance(my_new_model, BaseModel))
+        self.assertEqual(my_new_model.name, "Holberton")
+        self.assertEqual(my_new_model.my_number, 89)
+        self.assertEqual(my_new_model.id, self.my_model.id)
+        self.assertEqual(my_new_model.created_at, self.my_model.created_at)
+        self.assertEqual(my_new_model.updated_at, self.my_model.updated_at)
+        self.assertNotEqual(my_new_model, self.my_model)

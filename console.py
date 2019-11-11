@@ -162,13 +162,73 @@ class HBNBCommand(cmd.Cmd):
         print("vamos a contar!!")
 
     def default(self, args):
-        """Handle the prefix"""
-        line = args.split('.')
-        if len(line) >= 2:
-            if line[1] == 'all()':
-                self.do_all(line[0])
-            elif line[1] == 'count()':
-                self.do_count(line[0])
+        """ Handle the prefix and replace all the symbols by spaces"""
+        s = args.replace('.', ' ')
+        s = s.replace('(', ' ')
+        s = s.replace(')', '')
+        # if there is a dictionary give it the "" in order to get as a part
+        # with the shlex.split
+        s = s.replace('{', '\"{')
+        s = s.replace('}', '}\"')
+        s = s.replace(',', '')
+        # split the args taking care of the double quotes
+        line = shlex.split(s)
+        # create a new list empty where we are going to save the partitions
+        lista = ['', '', '', '', '']
+        for i in range(len(line)):
+            lista[i] = line[i]
+        # create a string as comando that is going to be the
+        # input of the functions
+        aux = ""
+        comando = aux
+        for i in range(0, 5):
+            if i != 1 and i != 4:
+                comando = comando + aux + str(lista[i])
+                aux = " "
+            if i == 4 and lista[i] != '':
+                comando = comando + aux + '\"'
+                comando = comando + str(lista[i]) + '\"'
+        # get the different functions depending of the line[1] part
+        if line[1] == 'all':
+            self.do_all(comando)
+        elif line[1] == 'count':
+            self.do_count(comando)
+        elif line[1] == 'show':
+            self.do_show(comando)
+        elif line[1] == 'destroy':
+            self.do_destroy(comando)
+        elif line[1] == 'update':
+            # when we have update it could be a dictionary or the name
+            # and the value if we get the {} is that we have a
+            # dictionary so we have to do a config
+            # else pass the comando
+            if line[3][0] == '{' and line[3][-1] == '}':
+                line[3] = line[3].replace(' ', ', ')
+                line[3] = line[3].replace(':,', ':')
+                line[3] = line[3].replace('\'', '\"')
+                line[3] = line[3].replace('\"{', '\'{')
+                line[3] = line[3].replace('}\"', '}\'')
+                # we change the dictionary-string into a dictionary-json
+                # in order to get a dictionary when we made the loads
+                b = line[3]
+                b = json.loads(b)
+                for i in b:
+                    # overwrite the lista in order to get the new comando
+                    lista[3] = i
+                    lista[4] = b[i]
+                    aux = ""
+                    comando = aux
+                    for i in range(0, 5):
+                        if i != 1 and i != 4:
+                            comando = comando + aux + str(lista[i])
+                            aux = " "
+                        if i == 4 and lista[i] != '':
+                            comando = comando + aux + '\"'
+                            comando = comando + str(lista[i]) + '\"'
+                    self.do_update(comando)
+
+            else:
+                self.do_update(comando)
         else:
             return cmd.Cmd.default(self, args)
 

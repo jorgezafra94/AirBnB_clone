@@ -166,17 +166,24 @@ class HBNBCommand(cmd.Cmd):
         s = args.replace('.', ' ')
         s = s.replace('(', ' ')
         s = s.replace(')', '')
-        # if there is a dictionary give it the "" in order to get as a part
-        # with the shlex.split
-        s = s.replace('{', '\"{')
-        s = s.replace('}', '}\"')
+        # if there is a dictionary give it a & in order to get as a part
+        # with the split
+        s = s.replace('{', '&{')
         s = s.replace(',', '')
-        # split the args taking care of the double quotes
-        line = shlex.split(s)
+        s = s.split('&')
+        # if there is a dictionary we get more than 1 elem in s
+        # if not there only will be one elem
+        # we made the shlex to the first elem in the split of s because is the
+        # first part before the dictionary, and if exist a second elem or more
+        # we add the second elem to line
+        line = shlex.split(s[0])
+        if len(s) > 1:
+            line.append(s[1])
         # create a new list empty where we are going to save the partitions
         lista = ['', '', '', '', '']
         for i in range(len(line)):
-            lista[i] = line[i]
+            if i < 5:
+                lista[i] = line[i]
         # create a string as comando that is going to be the
         # input of the functions
         aux = ""
@@ -198,24 +205,32 @@ class HBNBCommand(cmd.Cmd):
         elif line[1] == 'destroy':
             self.do_destroy(comando)
         elif line[1] == 'update':
-            # when we have update it could be a dictionary or the name
-            # and the value if we get the {} is that we have a
-            # dictionary so we have to do a config
-            # else pass the comando
-            if line[3][0] == '{' and line[3][-1] == '}':
-                line[3] = line[3].replace(' ', ', ')
-                line[3] = line[3].replace(':,', ':')
-                line[3] = line[3].replace('\'', '\"')
-                line[3] = line[3].replace('\"{', '\'{')
-                line[3] = line[3].replace('}\"', '}\'')
-                # we change the dictionary-string into a dictionary-json
-                # in order to get a dictionary when we made the loads
-                b = line[3]
-                b = json.loads(b)
-                for i in b:
-                    # overwrite the lista in order to get the new comando
-                    lista[3] = i
-                    lista[4] = b[i]
+            # when we have update it could be a dictionary or the name and attr
+            if lista[3] != '' and line[3][0] == '{' and line[3][-1] == '}':
+                # if it is a dictionary we separate it by pairs
+                line[3] = line[3].replace('{', ' ')
+                line[3] = line[3].replace('}', ' ')
+                line[3] = line[3].replace(': ', ':')
+                sub = shlex.split(line[3])
+                # then each pair we split it in a list, and we create tuples
+                # and with these tuples we create a list of tuples in order
+                # to create a dictionary with dict function
+                new_list = []
+                for elem in sub:
+                    # we take care of spaces thas why we use & in order to get
+                    # both parts
+                    elem = elem.replace(':', '&')
+                    sub2 = elem.split('&')
+                    if len(sub2) < 2:
+                        sub2.append('')
+                    new_list.append(tuple(sub2))
+                dicti = dict(new_list)
+                # go through the dictionary and create the comando string
+                # to send it into the function for the creation of the key
+                # and the attr in the object
+                for key in dicti:
+                    lista[3] = key
+                    lista[4] = dicti[key]
                     aux = ""
                     comando = aux
                     for i in range(0, 5):
@@ -226,7 +241,6 @@ class HBNBCommand(cmd.Cmd):
                             comando = comando + aux + '\"'
                             comando = comando + str(lista[i]) + '\"'
                     self.do_update(comando)
-
             else:
                 self.do_update(comando)
         else:

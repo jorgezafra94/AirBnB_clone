@@ -41,6 +41,11 @@ class FileStorageTest(unittest.TestCase):
         self.assertIsNotNone(FileStorage.save.__doc__)
         self.assertIsNotNone(FileStorage.reload.__doc__)
 
+    def test_isattribute_FileStorage(self):
+        """Checks if __objects and __file_path are att of FileS"""
+        self.assertTrue(hasattr(FileStorage, '_FileStorage__objects'))
+        self.assertTrue(hasattr(FileStorage, '_FileStorage__file_path'))
+
     def test_all_FileStorage(self):
         """ Test if 'all' method is working good """
         storage = FileStorage()
@@ -82,6 +87,19 @@ class FileStorageTest(unittest.TestCase):
         new = var2[new_key]
         for key in new:
             self.assertEqual(var1[key], new[key])
+
+    def test_reload_FileStorage(self):
+        """Tests if reload method is working good"""
+        storage = FileStorage()
+        objects = storage.all()
+        len1 = len(objects)
+        new_ins = BaseModel()
+        new_ins.name = "Betty"
+        storage.save()
+        storage.reload()
+        objects2 = storage.all()
+        len2 = len(objects2)
+        self.assertGreater(len2, len1)
 
 if __name__ == '__main__':
     unittest.main()

@@ -23,7 +23,6 @@ class ReviewTest(unittest.TestCase):
         cls.my_model2.place_id = "p002"
         cls.my_model2.user_id = "u002"
         cls.my_model2.text = "Bad :("
-        
 
     @classmethod
     def teardown(cls):
@@ -59,7 +58,7 @@ class ReviewTest(unittest.TestCase):
         self.assertEqual(self.my_model2.place_id, "p002")
         self.assertEqual(self.my_model2.user_id, "u002")
         self.assertEqual(self.my_model2.text, "Bad :(")
-        
+
     def test_diff_instances_Review(self):
         """ Test if two instences were created at different time
         and have different id's"""

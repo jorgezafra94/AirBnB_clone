@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
 File storage
+
 """
 import json
 import os
@@ -19,24 +20,48 @@ classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
 
 class FileStorage:
     """
-    Manage and save information in files
+    FileStorage gets the new objects created using Basemodel or
+    another class that inherits from BaseModel, and save this new
+    objects in a file.json.
+    in order to save the objects and upload them when we start to
+    run again the program
     """
     __file_path = 'file.json'
     __objects = {}
 
     def all(self):
-        """ return the dictionary """
+        """
+        all return the dictionary of objects
+        Args:
+            None
+        Returns:
+            the dictionary of objects
+        """
         return self.__objects
 
     def new(self, obj):
         """
-        save a dictionary per key
+        save in self.__objects each object created
+
+        Args:
+            obj
+        Returns:
+            None
+
         """
         self.__objects[obj.__class__.__name__ + "." + obj.id] = obj
 
     def save(self):
         """
-        save in file the serialized dictionary of dictionaries
+        save in file the serialized dictionary of objects
+        we have to change a dictionary of objects into
+        a dictionary of dictionaries using method .to_dict()
+        Save the result in file.json
+        Args:
+            None
+
+        Returns:
+            None
         """
         new = {}
         for elem in self.__objects:
@@ -47,6 +72,14 @@ class FileStorage:
     def reload(self):
         """
         load the Json from file and gets the dictionary of dictionaries
+        and the turn into a dictionary of objects and save it in
+        self.__objects
+
+        Args:
+            None
+
+        Returns:
+            None
         """
         if os.path.exists(self.__file_path) is True:
             with open(self.__file_path, 'r') as fd:

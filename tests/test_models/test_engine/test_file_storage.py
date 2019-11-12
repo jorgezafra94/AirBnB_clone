@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" File storage Class Tests """
+"""
+File storage Class Tests
+"""
 
 import unittest
 import os
@@ -10,7 +12,9 @@ from datetime import datetime
 
 
 class FileStorageTest(unittest.TestCase):
-    """Tests for BaseModel Class"""
+    """
+    Tests for BaseModel Class
+    """
 
     @classmethod
     def setUpClass(cls):
@@ -32,7 +36,7 @@ class FileStorageTest(unittest.TestCase):
             pass
 
     def test_checking_for_docstring_FileStorage(self):
-        """Test if all docstring were written"""
+        """ Test if all docstring were written"""
         self.assertIsNotNone(FileStorage.__doc__)
         self.assertIsNotNone(FileStorage.all.__doc__)
         self.assertIsNotNone(FileStorage.new.__doc__)
@@ -72,3 +76,6 @@ class FileStorageTest(unittest.TestCase):
     def test_save_FileStorage(self):
         """ Test if 'new' method is working good """
         pass
+
+if __name__ == '__main__':
+    unittest.main()

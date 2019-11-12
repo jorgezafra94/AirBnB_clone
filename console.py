@@ -17,27 +17,27 @@ classes = {'BaseModel': BaseModel, 'User': User, 'State': State, 'City': City,
 
 
 class HBNBCommand(cmd.Cmd):
-    """Console"""
+    """Console
+    """
     prompt = "(hbtn) "
 
     def do_EOF(self, args):
-        """ Console exit when EOF\n """
+        """Quit the console - Usage: EOF\n"""
         return (True)
 
     def do_quit(self, args):
-        """ Console quit Builtin\n """
+        """Quit the console -  Usage: quit\n"""
         return (True)
 
     def emptyline(self):
-        """ Does not perform any action """
+        """Does not perform any action """
         return (False)
 
     def do_create(self, args):
-        """
-        Creates an object using the BaseModel
-        eval the class if it exist or not
-        var = eval("BaseModel()") is the same as var = Basemodel()
-        """
+        """Create a new instance - Usage: create <Classname>\n"""
+        # Creates an object using the BaseModel
+        # eval the class if it exist or not
+        # var = eval("BaseModel()") is the same as var = Basemodel()
         if args is None or len(args) == 0:
             print("** class name missing **")
         else:
@@ -49,13 +49,12 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
 
     def do_show(self, args):
-        """
-        Prints the string representation of an instance
-        based on the class name and id
-        eval the class if it exist or not
-        var = eval("BaseModel") is the same as var = Basemodel()
-        use of split in order to get tokens or args
-        """
+        """Show the representation of an instance - Usage show <Classname>\n"""
+        # Prints the string representation of an instance
+        # based on the class name and id
+        # eval the class if it exist or not
+        # var = eval("BaseModel") is the same as var = Basemodel()
+        # use of split in order to get tokens or args
         if args is None or len(args) == 0:
             print("** class name missing **")
         else:
@@ -75,12 +74,12 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist **")
 
     def do_destroy(self, args):
-        """
-        delete the object: the dictionary of dictionaries with storage.all()
-        using alias with variable objects, and remove the key specified from
-        objects where modifies at the same time self.__objects Cuz is an alias
-        and finally update json file with storage.save()
-        """
+        """Delete the instance of a given class -
+        Usage: destroy <classname> <id>\n"""
+        # delete the object: the dictionary of dictionaries with storage.all()
+        # using alias with variable objects, and remove the key specified from
+        # objects where modifies at the same time self.__objects Cuz is
+        # an alias and finally update json file with storage.save()
         if args is None or len(args) == 0:
             print("** class name missing **")
         else:
@@ -102,12 +101,11 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist **")
 
     def do_all(self, args):
-        """
-        Prints all string representation of all instances based or not
-        on the class name
-        we have to use str because we have to call the method __str__
-        in order to print in the format that we need
-        """
+        """Print all instances of a class - Usage: all <classname>\n"""
+        # Prints all string representation of all instances based or not
+        # on the class name
+        # we have to use str because we have to call the method __str__
+        # in order to print in the format that we need
         objects = models.storage.all()
         objList = []
         if args is "":
@@ -127,10 +125,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
 
     def do_update(self, args):
-        """
-        Updates an instance based on the class name and id by adding
-        or updating attribute
-        """
+        """Update or set att in an instance -
+        Usage: update <classname> <id> <att_name> <att_value>\n"""
+        # Updates an instance based on the class name and id by adding
+        # or updating attribute
         line = shlex.split(args)
         if len(line) == 0:
             print("** class name missing **")
@@ -158,10 +156,11 @@ class HBNBCommand(cmd.Cmd):
                             models.storage.save()
 
     def do_count(self, args):
-        """Count the number of type of class"""
+        """Count the number of type of class - Usage: count <classname>"""
         print("vamos a contar!!")
 
     def default(self, args):
+        """ Handle alternative command representations """
         first = args.split('.')
         if len(first) > 1:
             class_name = first[0]

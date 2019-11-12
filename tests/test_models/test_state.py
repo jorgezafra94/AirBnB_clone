@@ -95,3 +95,6 @@ class StateTest(unittest.TestCase):
         self.assertEqual(my_new_model.created_at, self.my_model.created_at)
         self.assertEqual(my_new_model.updated_at, self.my_model.updated_at)
         self.assertNotEqual(my_new_model, self.my_model)
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-""" Basemodel Class Tests """
+"""
+
+Basemodel Class Tests
+
+"""
 
 import unittest
 import os
@@ -8,7 +12,9 @@ from datetime import datetime
 
 
 class BaseModelTest(unittest.TestCase):
-    """Tests for BaseModel Class"""
+    """
+    Tests for BaseModel Class
+    """
 
     @classmethod
     def setUpClass(cls):

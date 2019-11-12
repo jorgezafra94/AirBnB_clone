@@ -179,7 +179,7 @@ class HBNBCommand(cmd.Cmd):
                 # overwrite the method without ()
                 methods = second[0]
                 elems = second[1]
-                # remove (), and separate each elem replacing ", for "&
+                # remove (), and separate each elem
                 elems = elems.replace('(', '')
                 elems = elems.replace(')', '')
                 elems = elems.replace('{', '"{')
@@ -223,9 +223,9 @@ class HBNBCommand(cmd.Cmd):
                         for i in range(1, len(third)):
                             if i == 1:
                                 comando = comando + ' ' + third[i]
-                                comando = comando.replace('\"', '')
                             if i == 2:
-                                comando = comando + ' ' + third[i]
+                                comando = comando + ' '
+                                comando += '\"' + third[i] + '\"'
                         self.do_update(comando)
                 else:
                     return cmd.Cmd.default(self, args)

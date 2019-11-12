@@ -106,5 +106,13 @@ class UserTest(unittest.TestCase):
         self.assertEqual(my_new_model.updated_at, self.my_model.updated_at)
         self.assertNotEqual(my_new_model, self.my_model)
 
+    def test_hasattr(self):
+        """ attributes of User Class"""
+        new = User()
+        self.assertTrue(hasattr(new, 'email'))
+        self.assertTrue(hasattr(new, 'password'))
+        self.assertTrue(hasattr(new, 'first_name'))
+        self.assertTrue(hasattr(new, 'last_name'))
+
 if __name__ == '__main__':
     unittest.main()

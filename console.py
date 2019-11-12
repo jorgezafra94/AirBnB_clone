@@ -22,17 +22,16 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbtn) "
 
     def do_EOF(self, args):
-        """Quit the console - Usage: EOF\n"""
+        "Quit the console - Usage: EOF\n"
         print("")
         return (True)
 
     def do_quit(self, args):
-        """Quit command to exit the program\n"""
-        print("")
+        "Quit command to exit the program\n"
         return (True)
 
     def emptyline(self):
-        """Does not perform any action """
+        " Does not perform any action "
         pass
 
     def do_create(self, args):
@@ -159,7 +158,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, args):
         """Count the number of type of class - Usage: count <classname>"""
-        print("vamos a contar!!")
+        cont = 0
+        objects = models.storage.all()
+        new = {}
+        for elem in objects:
+            new[elem] = objects[elem].to_dict()
+        for elem in new:
+            if (args == new[elem]['__class__']):
+                cont = cont + 1
+        print(cont)
 
     def default(self, args):
         """ Handle alternative command representations """

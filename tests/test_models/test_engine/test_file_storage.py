@@ -90,11 +90,17 @@ class FileStorageTest(unittest.TestCase):
 
     def test_reload_FileStorage(self):
         """Tests if reload method is working good"""
+        if os.path.exists('file.json') is True:
+            os.remove('file.json')
+        var1 = self.my_model
         storage = FileStorage()
         storage.save()
-        storage.reload()
-        objects2 = storage.all()
-        self.assertTrue(len(objects2) > 0)
-
+        if os.path.exists('file.json') is True:
+            first = storage.all()
+            storage._FileStorage__objects = {}
+            self.assertNotEqual(first, storage._FileStorage__objects)
+            storage.reload()
+            for elem in storage._FileStorage__objects:
+                self.assertTrue(elem in first)
 if __name__ == '__main__':
     unittest.main()

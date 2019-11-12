@@ -162,87 +162,74 @@ class HBNBCommand(cmd.Cmd):
         print("vamos a contar!!")
 
     def default(self, args):
-        """ Handle the prefix and replace all the symbols by spaces"""
-        s = args.replace('.', ' ')
-        s = s.replace('(', ' ')
-        s = s.replace(')', '')
-        # if there is a dictionary give it a & in order to get as a part
-        # with the split
-        s = s.replace('{', '&{')
-        s = s.replace(',', '')
-        s = s.split('&')
-        # if there is a dictionary we get more than 1 elem in s
-        # if not there only will be one elem
-        # we made the shlex to the first elem in the split of s because is the
-        # first part before the dictionary, and if exist a second elem or more
-        # we add the second elem to line
-        line = shlex.split(s[0])
-        if len(s) > 1:
-            line.append(s[1])
-        # create a new list empty where we are going to save the partitions
-        lista = ['', '', '', '', '']
-        for i in range(len(line)):
-            if i < 5:
-                lista[i] = line[i]
-        # create a string as comando that is going to be the
-        # input of the functions
-        aux = ""
-        comando = aux
-        for i in range(0, 5):
-            if i != 1 and i != 4:
-                comando = comando + aux + str(lista[i])
-                aux = " "
-            if i == 4 and lista[i] != '':
-                comando = comando + aux + '\"'
-                comando = comando + str(lista[i]) + '\"'
-        # get the different functions depending of the line[1] part
-        if line[1] == 'all':
-            self.do_all(comando)
-        elif line[1] == 'count':
-            self.do_count(comando)
-        elif line[1] == 'show':
-            self.do_show(comando)
-        elif line[1] == 'destroy':
-            self.do_destroy(comando)
-        elif line[1] == 'update':
-            # when we have update it could be a dictionary or the name and attr
-            if lista[3] != '' and line[3][0] == '{' and line[3][-1] == '}':
-                # if it is a dictionary we separate it by pairs
-                line[3] = line[3].replace('{', ' ')
-                line[3] = line[3].replace('}', ' ')
-                line[3] = line[3].replace(': ', ':')
-                sub = shlex.split(line[3])
-                # then each pair we split it in a list, and we create tuples
-                # and with these tuples we create a list of tuples in order
-                # to create a dictionary with dict function
-                new_list = []
-                for elem in sub:
-                    # we take care of spaces thas why we use & in order to get
-                    # both parts
-                    elem = elem.replace(':', '&')
-                    sub2 = elem.split('&')
-                    if len(sub2) < 2:
-                        sub2.append('')
-                    new_list.append(tuple(sub2))
-                dicti = dict(new_list)
-                # go through the dictionary and create the comando string
-                # to send it into the function for the creation of the key
-                # and the attr in the object
-                for key in dicti:
-                    lista[3] = key
-                    lista[4] = dicti[key]
-                    aux = ""
-                    comando = aux
-                    for i in range(0, 5):
-                        if i != 1 and i != 4:
-                            comando = comando + aux + str(lista[i])
-                            aux = " "
-                        if i == 4 and lista[i] != '':
-                            comando = comando + aux + '\"'
-                            comando = comando + str(lista[i]) + '\"'
-                    self.do_update(comando)
+        first = args.split('.')
+        if len(first) > 1:
+            class_name = first[0]
+            # now we have to separate the first[1] using ( delimiter
+            # that is why we add a &
+            methods = first[1]
+            first[1] = first[1].replace('(', '&(')
+            second = first[1].split('&')
+            comando = class_name
+
+            if methods == "all()":
+                self.do_all(comando)
+            elif methods == "count()":
+                self.do_count(comando)
             else:
-                self.do_update(comando)
+                # overwrite the method without ()
+                methods = second[0]
+                elems = second[1]
+                # remove (), and separate each elem replacing ", for "&
+                elems = elems.replace('(', '')
+                elems = elems.replace(')', '')
+                elems = elems.replace('{', '"{')
+                elems = elems.replace('}', '}"')
+                third = shlex.split(elems)
+                for i in range(len(third)):
+                    third[i] = third[i].replace(',', ' ')
+                    third[i] = third[i].strip()
+                id = third[0]
+                comando = comando + ' ' + id
+                comando = comando.replace('\"', '')
+                # read if len(third) > 1 error for show because it only
+                # allows one element same with destroy
+                if methods == "show" and len(third) == 1:
+                    self.do_show(comando)
+                elif methods == "destroy" and len(third) == 1:
+                    self.do_destroy(comando)
+                elif methods == "update":
+                    print(third)
+                    if third[1][0] == '{' and third[1][-1] == '}':
+                        third[1] = third[1].replace('{', '')
+                        third[1] = third[1].replace('}', '')
+                        third[1] = third[1].replace(': ', ':')
+                        sub = shlex.split(third[1], ', ')
+                        new = []
+                        for ele in sub:
+                            sub2 = ele.split(':')
+                            if len(sub2) < 2:
+                                sub2.append('')
+                            new.append(tuple(sub2))
+                        dicti = dict(new)
+                        print(dicti)
+                        for key in dicti:
+                            new_comand = comando + ' '
+                            new_comand += str(key)
+                            new_comand = new_comand.replace('\"', '')
+                            new_comand = new_comand.replace('\'', '')
+                            new_comand += ' \"' + str(dicti[key]) + '\"'
+                            self.do_update(new_comand)
+                    else:
+                        for i in range(1, len(third)):
+                            if i == 1:
+                                comando = comando + ' ' + third[i]
+                                comando = comando.replace('\"', '')
+                            if i == 2:
+                                comando = comando + ' ' + third[i]
+                        self.do_update(comando)
+                else:
+                    return cmd.Cmd.default(self, args)
         else:
             return cmd.Cmd.default(self, args)
 

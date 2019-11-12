@@ -23,6 +23,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, args):
         """Quit the console - Usage: EOF\n"""
+        print("")
         return (True)
 
     def do_quit(self, args):
@@ -31,7 +32,7 @@ class HBNBCommand(cmd.Cmd):
 
     def emptyline(self):
         """Does not perform any action """
-        return (False)
+        pass
 
     def do_create(self, args):
         """Create a new instance - Usage: create <Classname>\n"""
@@ -234,5 +235,4 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == '__main__':
     """ Main """
-    console = HBNBCommand()
-    console.cmdloop()
+    HBNBCommand().cmdloop()

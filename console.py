@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+"""
+
+Console for Arbnb clone
+
+"""
 import cmd
 import sys
 import shlex
@@ -17,7 +22,10 @@ classes = {'BaseModel': BaseModel, 'User': User, 'State': State, 'City': City,
 
 
 class HBNBCommand(cmd.Cmd):
-    """Console
+    """
+    Console
+    main class
+
     """
     prompt = "(hbtn) "
 

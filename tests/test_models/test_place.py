@@ -47,9 +47,6 @@ class PlaceTest(unittest.TestCase):
         """ Delete the instance at the end of tests"""
         del cls.my_model
         del cls.my_model2
-
-    def tearDown(self):
-        """ Remove file at the end of tests"""
         try:
             os.remove("file.json")
         except:
@@ -94,13 +91,6 @@ class PlaceTest(unittest.TestCase):
         self.assertEqual(self.my_model2.latitude, 2.53)
         self.assertEqual(self.my_model2.longitude, 3.42)
         self.assertEqual(self.my_model2.amenity_ids, ['004', '005', '006'])
-
-    def test_diff_instances_Place(self):
-        """ Test if two instences were created at different time
-        and have different id's"""
-        self.assertNotEqual(self.my_model.created_at,
-                            self.my_model2.created_at)
-        self.assertNotEqual(self.my_model.id, self.my_model2.id)
 
     def test_str(self):
         """Test if __str__ method show the right output"""

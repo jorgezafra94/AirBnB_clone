@@ -29,9 +29,6 @@ class ReviewTest(unittest.TestCase):
         """ Delete the instance at the end of tests"""
         del cls.my_model
         del cls.my_model2
-
-    def tearDown(self):
-        """ Remove file at the end of tests"""
         try:
             os.remove("file.json")
         except:
@@ -62,8 +59,6 @@ class ReviewTest(unittest.TestCase):
     def test_diff_instances_Review(self):
         """ Test if two instences were created at different time
         and have different id's"""
-        self.assertNotEqual(self.my_model.created_at,
-                            self.my_model2.created_at)
         self.assertNotEqual(self.my_model.id, self.my_model2.id)
 
     def test_str(self):

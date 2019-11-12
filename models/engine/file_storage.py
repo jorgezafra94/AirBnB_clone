@@ -38,14 +38,13 @@ class FileStorage:
         for elem in self.__objects:
             new[elem] = self.__objects[elem].to_dict()
         with open(self.__file_path, 'w') as fd:
-            fd.write(json.dumps(new))
+            json.dump(new, fd)
 
     def reload(self):
         """ load the Json from file and gets the dictionary of dictionaries"""
         if os.path.exists(self.__file_path) is True:
             with open(self.__file_path, 'r') as fd:
-                var = fd.read()
-                var = json.loads(var)
+                var = json.load(fd)
                 for elem in var:
                     aux = classes[var[elem]['__class__']]
                     self.__objects[elem] = aux(**(var[elem]))

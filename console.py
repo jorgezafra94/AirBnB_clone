@@ -19,7 +19,7 @@ classes = {'BaseModel': BaseModel, 'User': User, 'State': State, 'City': City,
 class HBNBCommand(cmd.Cmd):
     """Console
     """
-    prompt = "(hbtn) "
+    prompt = "(hbtn)"
 
     def do_EOF(self, args):
         """Quit the console - Usage: EOF\n"""

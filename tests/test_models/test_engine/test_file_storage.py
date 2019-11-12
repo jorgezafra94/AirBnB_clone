@@ -9,6 +9,7 @@ from models.base_model import BaseModel
 from models.state import State
 from models.engine.file_storage import FileStorage
 from datetime import datetime
+import json
 
 
 class FileStorageTest(unittest.TestCase):
@@ -75,7 +76,17 @@ class FileStorageTest(unittest.TestCase):
 
     def test_save_FileStorage(self):
         """ Test if 'new' method is working good """
-        pass
+        if os.path.exists("file.json") is True:
+            os.remove("file.json")
+        var1 = self.my_model.to_dict()
+        storage = FileStorage()
+        storage.save()
+        with open("file.json", 'r') as fd:
+            var2 = json.load(fd)
+        for key in var2:
+            new = var2[key]
+        for key in new:
+            self.assertEqual(var1[key], new[key])
 
 if __name__ == '__main__':
     unittest.main()

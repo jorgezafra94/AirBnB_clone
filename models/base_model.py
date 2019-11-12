@@ -9,9 +9,13 @@ import models
 
 
 class BaseModel:
-    """Defines the common attributes of new objects"""
+    """
+    Defines the common attributes of new objects
+    """
     def __init__(self, *args, **kwargs):
-        """Class constructor"""
+        """
+        Class constructor
+        """
         if kwargs is not None and len(kwargs) != 0:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -26,21 +30,27 @@ class BaseModel:
             self.updated_at = datetime.now()
             models.storage.new(self)
 
-    def save(self):
-        """Saves the object"""
-        value = datetime.now()
-        setattr(self, 'updated_at', value)
-        models.storage.save()
-
     def __str__(self):
-        """Returns specific info"""
+        """
+        Returns specific info
+        """
         className = "[" + self.__class__.__name__ + "] "
         classId = "(" + self.id + ") "
         classDict = str(self.__dict__)
         return className + classId + classDict
 
+    def save(self):
+        """
+        Saves the object
+        """
+        value = datetime.now()
+        setattr(self, 'updated_at', value)
+        models.storage.save()
+
     def to_dict(self):
-        """Gets the __dict__ and add the key __class__"""
+        """
+        Gets the __dict__ and add the key __class__
+        """
         new = {}
         var = self.__dict__
         for elem in var:

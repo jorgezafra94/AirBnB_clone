@@ -1,24 +1,30 @@
 #!/usr/bin/python3
-""" Basemodel Class Tests """
+""" Test of User Class"""
+
 
 import unittest
 import os
 from models.base_model import BaseModel
+from models.user import User
 from datetime import datetime
 
 
-class BaseModelTest(unittest.TestCase):
-    """Tests for BaseModel Class"""
+class UserTest(unittest.TestCase):
+    """Tests for User Class"""
 
     @classmethod
     def setUpClass(cls):
         """ Setup an instance for test"""
-        cls.my_model = BaseModel()
-        cls.my_model.name = "Holberton"
-        cls.my_model.my_number = 89
-        cls.my_model2 = BaseModel()
-        cls.my_model2.name = "Holberton"
-        cls.my_model2.my_number = 89
+        cls.my_model = User()
+        cls.my_model.email = "123@hotmail.com"
+        cls.my_model.password = "12345"
+        cls.my_model.first_name = "Carlos"
+        cls.my_model.last_name = "Molano"
+        cls.my_model2 = User()
+        cls.my_model2.email = "123@gmail.com"
+        cls.my_model2.password = "67890"
+        cls.my_model2.first_name = "Jorge"
+        cls.my_model2.last_name = "Zafra"
 
     @classmethod
     def teardown(cls):
@@ -33,26 +39,31 @@ class BaseModelTest(unittest.TestCase):
         except:
             pass
 
-    def test_checking_for_docstring_BaseModel(self):
+    def test_checking_for_docstring_User(self):
         """Test if all docstring were written"""
-        self.assertIsNotNone(BaseModel.__doc__)
-        self.assertIsNotNone(BaseModel.__init__.__doc__)
-        self.assertIsNotNone(BaseModel.save.__doc__)
-        self.assertIsNotNone(BaseModel.__str__.__doc__)
-        self.assertIsNotNone(BaseModel.to_dict.__doc__)
+        self.assertIsNotNone(User.__doc__)
 
-    def test_instance_BaseModel(self):
-        """Test if my_model 1 and 2 are instances of BaseModel
+    def test_subclass_instance_User(self):
+        """Test if my_model 1 and 2 are subclasses of BaseModel,
+        also if they are instances of Amenity
         if are instances checks if the attributes were well
         assigned"""
+        self.assertTrue(issubclass(self.my_model.__class__, BaseModel))
+        self.assertTrue(issubclass(self.my_model2.__class__, BaseModel))
         self.assertTrue(isinstance(self.my_model, BaseModel))
         self.assertTrue(isinstance(self.my_model2, BaseModel))
-        self.assertEqual(self.my_model.name, "Holberton")
-        self.assertEqual(self.my_model2.name, "Holberton")
-        self.assertEqual(self.my_model.my_number, 89)
-        self.assertEqual(self.my_model.my_number, 89)
+        self.assertTrue(isinstance(self.my_model, User))
+        self.assertTrue(isinstance(self.my_model2, User))
+        self.assertEqual(self.my_model.email, "123@hotmail.com")
+        self.assertEqual(self.my_model.password, "12345")
+        self.assertEqual(self.my_model.first_name, "Carlos")
+        self.assertEqual(self.my_model.last_name, "Molano")
+        self.assertEqual(self.my_model2.email, "123@gmail.com")
+        self.assertEqual(self.my_model2.password, "67890")
+        self.assertEqual(self.my_model2.first_name, "Jorge")
+        self.assertEqual(self.my_model2.last_name, "Zafra")
 
-    def test_diff_instances_BaseModel(self):
+    def test_diff_instances_User(self):
         """ Test if two instences were created at different time
         and have different id's"""
         self.assertNotEqual(self.my_model.created_at,
@@ -61,22 +72,22 @@ class BaseModelTest(unittest.TestCase):
 
     def test_str(self):
         """Test if __str__ method show the right output"""
-        string = "[BaseModel] ({}) {}".format(self.my_model.id,
-                                              self.my_model.__dict__)
+        string = "[User] ({}) {}".format(self.my_model.id,
+                                         self.my_model.__dict__)
         self.assertEqual(string, str(self.my_model))
 
-    def test_save_BaseModel(self):
+    def test_save_User(self):
         """Test if updated at changes"""
         self.my_model.save()
         self.assertNotEqual(self.my_model.created_at, self.my_model.updated_at)
 
-    def test_to_dict_BaseModel(self):
+    def test_to_dict_Amenity(self):
         """If the convertion to dictionary works:
         __class__: has to be created
         created_at and updated at have to change the format"""
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
         model_dict = self.my_model.to_dict()
-        self.assertEqual(self.my_model.__class__.__name__, 'BaseModel')
+        self.assertEqual(self.my_model.__class__.__name__, 'User')
         self.assertEqual(type(model_dict['created_at']), str)
         self.assertEqual(type(model_dict['updated_at']), str)
         self.assertEqual(model_dict["created_at"],
@@ -84,13 +95,17 @@ class BaseModelTest(unittest.TestCase):
         self.assertEqual(model_dict["updated_at"],
                          self.my_model.updated_at.strftime(t_format))
 
-    def test_from_dict_to_BaseModel(self):
+    def test_from_dict_to_User(self):
         """Test if we can create an instance from a dictionary"""
         my_model_json = self.my_model.to_dict()
-        my_new_model = BaseModel(**my_model_json)
+        my_new_model = User(**my_model_json)
+        self.assertTrue(isinstance(my_new_model, User))
         self.assertTrue(isinstance(my_new_model, BaseModel))
-        self.assertEqual(my_new_model.name, "Holberton")
-        self.assertEqual(my_new_model.my_number, 89)
+        self.assertTrue(issubclass(my_new_model.__class__, BaseModel))
+        self.assertEqual(my_new_model.email, "123@hotmail.com")
+        self.assertEqual(my_new_model.password, "12345")
+        self.assertEqual(my_new_model.first_name, "Carlos")
+        self.assertEqual(my_new_model.last_name, "Molano")
         self.assertEqual(my_new_model.id, self.my_model.id)
         self.assertEqual(my_new_model.created_at, self.my_model.created_at)
         self.assertEqual(my_new_model.updated_at, self.my_model.updated_at)

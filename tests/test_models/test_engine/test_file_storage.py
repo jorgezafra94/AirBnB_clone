@@ -28,9 +28,6 @@ class FileStorageTest(unittest.TestCase):
     def teardown(cls):
         """ Delete the instance at the end of tests"""
         del cls.my_model
-
-    def tearDown(self):
-        """ Remove file at the end of tests"""
         try:
             os.remove("file.json")
         except:
@@ -76,15 +73,13 @@ class FileStorageTest(unittest.TestCase):
 
     def test_save_FileStorage(self):
         """ Test if 'new' method is working good """
-        if os.path.exists("file.json") is True:
-            os.remove("file.json")
         var1 = self.my_model.to_dict()
+        new_key = var1['__class__'] + "." + var1['id']
         storage = FileStorage()
         storage.save()
         with open("file.json", 'r') as fd:
             var2 = json.load(fd)
-        for key in var2:
-            new = var2[key]
+        new = var2[new_key]
         for key in new:
             self.assertEqual(var1[key], new[key])
 

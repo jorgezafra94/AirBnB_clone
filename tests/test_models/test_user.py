@@ -21,10 +21,10 @@ class UserTest(unittest.TestCase):
         cls.my_model.first_name = "Carlos"
         cls.my_model.last_name = "Molano"
         cls.my_model2 = User()
-        cls.my_model2.email = "123@gmail.com"
-        cls.my_model2.password = "67890"
-        cls.my_model2.first_name = "Jorge"
-        cls.my_model2.last_name = "Zafra"
+        cls.my_model2.email = None
+        cls.my_model2.password = None
+        cls.my_model2.first_name = None
+        cls.my_model2.last_name = None
 
     @classmethod
     def teardown(cls):
@@ -55,10 +55,10 @@ class UserTest(unittest.TestCase):
         self.assertEqual(self.my_model.password, "12345")
         self.assertEqual(self.my_model.first_name, "Carlos")
         self.assertEqual(self.my_model.last_name, "Molano")
-        self.assertEqual(self.my_model2.email, "123@gmail.com")
-        self.assertEqual(self.my_model2.password, "67890")
-        self.assertEqual(self.my_model2.first_name, "Jorge")
-        self.assertEqual(self.my_model2.last_name, "Zafra")
+        self.assertEqual(self.my_model2.email, None)
+        self.assertEqual(self.my_model2.password, None)
+        self.assertEqual(self.my_model2.first_name, None)
+        self.assertEqual(self.my_model2.last_name, None)
 
     def test_diff_instances_User(self):
         """ Test if two instences were created at different time
@@ -108,7 +108,7 @@ class UserTest(unittest.TestCase):
 
     def test_hasattr(self):
         """ attributes of User Class"""
-        new = User()
+        new = self.my_model2
         self.assertTrue(hasattr(new, 'email'))
         self.assertTrue(hasattr(new, 'password'))
         self.assertTrue(hasattr(new, 'first_name'))

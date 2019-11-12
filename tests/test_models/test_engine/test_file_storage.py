@@ -88,34 +88,5 @@ class FileStorageTest(unittest.TestCase):
         for key in new:
             self.assertEqual(var1[key], new[key])
 
-    def test_reload_filestorage(self):
-        """
-        tests reload
-        """
-        storage = FileStorage()
-        storage.save()
-        Root = os.path.dirname(os.path.abspath("console.py"))
-        path = os.path.join(Root, "file.json")
-        with open(path, 'r') as f:
-            lines = f.readlines()
-        try:
-            os.remove(path)
-        except:
-            pass
-        storage.save()
-        with open(path, 'r') as f:
-            lines2 = f.readlines()
-        self.assertEqual(lines, lines2)
-        try:
-            os.remove(path)
-        except:
-            pass
-        with open(path, "w") as f:
-            f.write("{}")
-        with open(path, "r") as r:
-            for line in r:
-                self.assertEqual(line, "{}")
-        self.assertIs(storage.reload(), None)
-
 if __name__ == '__main__':
     unittest.main()

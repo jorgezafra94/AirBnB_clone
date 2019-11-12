@@ -47,21 +47,25 @@ class UserTest(unittest.TestCase):
         """ Tests email """
         self.assertTrue(hasattr(self.my_model, 'email'))
         self.assertEqual(self.my_model.email, "123@hotmail.com")
+        self.assertEqual(type(self.my_model.email), str)
 
     def test_attribute_password(self):
         """ Test password """
         self.assertTrue(hasattr(self.my_model, 'password'))
         self.assertEqual(self.my_model.password, "12345")
+        self.assertEqual(type(self.my_model.password), str)
 
     def test_attribute_first_name(self):
         """ Check first name """
         self.assertTrue(hasattr(self.my_model, 'first_name'))
         self.assertEqual(self.my_model.first_name, "Carlos")
+        self.assertEqual(type(self.my_model.first_name), str)
 
     def test_attribute_last_name(self):
         """Check last name"""
         self.assertTrue(hasattr(self.my_model, 'last_name'))
         self.assertEqual(self.my_model.last_name, "Molano")
+        self.assertEqual(type(self.my_model.last_name), str)
 
     def test_hasattr(self):
         """ attributes inheritated of BaseModel"""

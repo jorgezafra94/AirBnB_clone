@@ -18,7 +18,9 @@ classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
 
 
 class FileStorage:
-    """Manage and save information in files"""
+    """
+    Manage and save information in files
+    """
     __file_path = 'file.json'
     __objects = {}
 

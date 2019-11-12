@@ -60,19 +60,18 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             line = args.split()
-
-            if len(line) < 2:
-                print("""** instance id missing **""")
-            else:
-                try:
+            if line[0] in classes:
+                if len(line) < 2:
+                    print("""** instance id missing **""")
+                else:
                     objects = models.storage.all()
                     key = str(line[0]) + "." + str(line[1])
                     if key in objects:
                         print(objects[key])
                     else:
                         print("** no instance found **")
-                except:
-                    print("** class doesn't exist **")
+            else:
+                print("** class doesn't exist **")
 
     def do_destroy(self, args):
         """Delete the instance of a given class -
@@ -81,12 +80,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         else:
             line = args.split()
-
-            if len(line) < 2:
-                print("""** instance id missing **""")
-            else:
-
-                try:
+            if line[0] in classes:
+                if len(line) < 2:
+                    print("""** instance id missing **""")
+                else:
                     objects = models.storage.all()
                     key = str(line[0]) + "." + str(line[1])
                     if key in objects:
@@ -94,8 +91,8 @@ class HBNBCommand(cmd.Cmd):
                         models.storage.save()
                     else:
                         print("** no instance found **")
-                except:
-                    print("** class doesn't exist **")
+            else:
+                print("** class doesn't exist **")
 
     def do_all(self, args):
         """Print all instances of a class - Usage: all <classname>\n"""

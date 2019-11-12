@@ -88,19 +88,34 @@ class FileStorageTest(unittest.TestCase):
         for key in new:
             self.assertEqual(var1[key], new[key])
 
-    def test_reload_FileStorage(self):
-        """Tests if reload method is working good"""
-        if os.path.exists('file.json') is True:
-            os.remove('file.json')
-        var1 = self.my_model
+    def test_reload_filestorage(self):
+        """
+        tests reload
+        """
         storage = FileStorage()
         storage.save()
-        if os.path.exists('file.json') is True:
-            first = storage.all()
-            storage._FileStorage__objects = {}
-            self.assertNotEqual(first, storage._FileStorage__objects)
-            storage.reload()
-            for elem in storage._FileStorage__objects:
-                self.assertTrue(elem in first)
+        Root = os.path.dirname(os.path.abspath("console.py"))
+        path = os.path.join(Root, "file.json")
+        with open(path, 'r') as f:
+            lines = f.readlines()
+        try:
+            os.remove(path)
+        except:
+            pass
+        storage.save()
+        with open(path, 'r') as f:
+            lines2 = f.readlines()
+        self.assertEqual(lines, lines2)
+        try:
+            os.remove(path)
+        except:
+            pass
+        with open(path, "w") as f:
+            f.write("{}")
+        with open(path, "r") as r:
+            for line in r:
+                self.assertEqual(line, "{}")
+        self.assertIs(storage.reload(), None)
+
 if __name__ == '__main__':
     unittest.main()

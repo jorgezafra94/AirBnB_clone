@@ -1,33 +1,35 @@
 #!/usr/bin/python3
 """
-
-Console for Arbnb clone
-
+Entry point of the command interpreter
+Use: ./console.py
+(hbnb) <command>
 """
 import cmd
 
 
 class HBNBCommand(cmd.Cmd):
     """
-    Console
-    main class
-
+    Use of cmd class as an interpreter
+    Class Attributes:
+        prompt (str): custom prompt
+        name_classes: dictionay of classes
+        name_dotcommand: commands/functions with dot format
     """
-    prompt = "(hbtn) "
+    prompt = "(hbnb) "
 
-    def do_EOF(self, args):
-        "Quit the console - Usage: EOF\n"
-        print("")
-        return (True)
+    def do_quit(self, arg):
+        'Quit command to exit the program\n'
+        return True
 
-    def do_quit(self, args):
-        "Quit command to exit the program\n"
-        return (True)
+    def do_EOF(self, arg):
+        'Ctr + D to exit the program\n'
+        print()
+        return True
 
     def emptyline(self):
-        " Does not perform any action "
+        'Overrides the empty line method inherited from cmd'
         pass
 
 if __name__ == '__main__':
-    """ Main """
-    HBNBCommand().cmdloop()
+    console = HBNBCommand()
+    console.cmdloop()

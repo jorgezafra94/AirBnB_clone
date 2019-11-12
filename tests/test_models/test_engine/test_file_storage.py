@@ -91,15 +91,10 @@ class FileStorageTest(unittest.TestCase):
     def test_reload_FileStorage(self):
         """Tests if reload method is working good"""
         storage = FileStorage()
-        objects = storage.all()
-        len1 = len(objects)
-        new_ins = BaseModel()
-        new_ins.name = "Betty"
         storage.save()
         storage.reload()
         objects2 = storage.all()
-        len2 = len(objects2)
-        self.assertGreater(len2, len1)
+        self.assertTrue(len(objects2) > 0)
 
 if __name__ == '__main__':
     unittest.main()

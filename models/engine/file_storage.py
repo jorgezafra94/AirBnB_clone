@@ -3,6 +3,7 @@
 File storage
 """
 import json
+import os
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -47,11 +48,9 @@ class FileStorage:
         """
         load the Json from file and gets the dictionary of dictionaries
         """
-        try:
+        if os.path.exists(self.__file_path) is True:
             with open(self.__file_path, 'r') as fd:
                 var = json.load(fd)
                 for elem in var:
                     aux = classes[var[elem]['__class__']]
                     self.__objects[elem] = aux(**(var[elem]))
-        except:
-            pass

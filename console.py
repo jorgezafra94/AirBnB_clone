@@ -192,7 +192,8 @@ class HBNBCommand(cmd.Cmd):
                 elif methods == "destroy" and len(third) == 1:
                     self.do_destroy(comando)
                 elif methods == "update":
-                    if third[1][0] == '{' and third[1][-1] == '}':
+                    x = len(third)
+                    if x > 1 and third[1][0] == '{' and third[1][-1] == '}':
                         third[1] = third[1].replace('{', '')
                         third[1] = third[1].replace('}', '')
                         third[1] = third[1].replace(': ', ':')

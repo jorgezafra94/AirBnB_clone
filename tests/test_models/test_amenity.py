@@ -5,7 +5,6 @@ x
 """
 
 from models.amenity import Amenity
-import datetime
 import unittest
 
 
@@ -24,6 +23,10 @@ class TestAmenity(unittest.TestCase):
     def test_attribute_name(self):
         """ Check name """
         self.assertEqual(hasattr(self.model, "name"), True)
+
+    def test_types(self):
+        """ test types """
+        self.assertEqual(type(self.model.name), str)
 
 if __name__ == '__main__':
     unittest.main()

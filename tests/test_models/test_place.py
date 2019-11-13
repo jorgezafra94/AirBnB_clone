@@ -71,21 +71,5 @@ class TestPlace(unittest.TestCase):
         self.assertTrue(hasattr(self.model, 'created_at'))
         self.assertTrue(hasattr(self.model, 'updated_at'))
 
-    def test_attributes_types(self):
-        """Tests types """
-        self.assertEqual(type(self.model.city_id), str)
-        self.assertEqual(type(self.model.user_id), str)
-        self.assertEqual(type(self.model.name), str)
-        self.assertEqual(type(self.model.description), str)
-        self.assertEqual(type(self.model.number_rooms), int)
-        self.assertEqual(type(self.model.number_bathrooms), int)
-        self.assertEqual(type(self.model.max_guest), int)
-        self.assertEqual(type(self.model.price_by_night), int)
-        self.assertEqual(type(self.model.latitude), float)
-        self.assertEqual(type(self.model.longitude), float)
-        self.assertEqual(type(self.model.amenity_ids), list)
-        self.assertIsInstance(self.model.created_at, datetime.datetime)
-        self.assertIsInstance(self.model.updated_at, datetime.datetime)
-
 if __name__ == '__main__':
     unittest.main()

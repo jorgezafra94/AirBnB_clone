@@ -177,10 +177,14 @@ class HBNBCommand(cmd.Cmd):
                 elems = elems.replace('{', '"{')
                 elems = elems.replace('}', '}"')
                 third = shlex.split(elems)
-                for i in range(len(third)):
-                    third[i] = third[i].replace(',', ' ')
-                    third[i] = third[i].strip()
-                id = third[0]
+                if not third:
+                    id = ' '
+                    third.append(id)
+                else:
+                    for i in range(len(third)):
+                        third[i] = third[i].replace(',', ' ')
+                        third[i] = third[i].strip()
+                    id = third[0]
                 comando = comando + ' ' + id
                 comando = comando.replace('\"', '')
                 if methods == "show" and len(third) == 1:
@@ -188,7 +192,6 @@ class HBNBCommand(cmd.Cmd):
                 elif methods == "destroy" and len(third) == 1:
                     self.do_destroy(comando)
                 elif methods == "update":
-                    print(third)
                     if third[1][0] == '{' and third[1][-1] == '}':
                         third[1] = third[1].replace('{', '')
                         third[1] = third[1].replace('}', '')

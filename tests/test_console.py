@@ -81,7 +81,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(f.getvalue(), '\n')
 
     def test_count(self):
-        """Validate create method"""
+        """Validate count method"""
         try:
             os.remove("file.json")
         except:
@@ -94,11 +94,23 @@ class TestUser(unittest.TestCase):
             HBNBCommand().onecmd("User.count()")
         self.assertNotEqual(f.getvalue(), '')
         with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("id.count()")
+        self.assertEqual(f.getvalue(), '0\n')
+        with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("User.count(d)")
         self.assertEqual(f.getvalue(), '*** Unknown syntax: User.count(d)\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("User.count()d")
         self.assertEqual(f.getvalue(), '*** Unknown syntax: User.count()d\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("count")
+        self.assertEqual(f.getvalue(), '0\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("count id")
+        self.assertEqual(f.getvalue(), '0\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("count BaseModel id")
+        self.assertEqual(f.getvalue(), '0\n')
 
     def test_create(self):
         """Validate create method"""
@@ -121,6 +133,18 @@ class TestUser(unittest.TestCase):
 
     def test_show(self):
         """Validate show in both ways"""
+        try:
+            os.remove("file.json")
+        except:
+            pass
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create User")
+        id = f.getvalue()
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("show" + "User " + id)
+        self.assertIsNotNone(f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("show")
         self.assertEqual(f.getvalue(), '** class name missing **\n')
@@ -142,6 +166,9 @@ class TestUser(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("sdasdasd.show(1)")
         self.assertEqual(f.getvalue(), '** class doesn\'t exist **\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("User.show()")
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
 
     def test_destroy(self):
         """Validate destroy in both ways"""
@@ -166,6 +193,9 @@ class TestUser(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("sdasdasd.destroy(1)")
         self.assertEqual(f.getvalue(), '** class doesn\'t exist **\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("User.destroy()")
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
 
     def test_all(self):
         """Validate all both ways"""
@@ -185,6 +215,12 @@ class TestUser(unittest.TestCase):
             HBNBCommand().onecmd("BaseModel.all(ss)")
         self.assertEqual(f.getvalue(),
                          '*** Unknown syntax: BaseModel.all(ss)\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("ssss.all()")
+        self.assertEqual(f.getvalue(), '** class doesn\'t exist **\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("User.all(dasds)")
+        self.assertEqual(f.getvalue(), '*** Unknown syntax: User.all(dasds)\n')
 
     def test_update(self):
         """Validate all both ways"""
@@ -213,8 +249,37 @@ class TestUser(unittest.TestCase):
             HBNBCommand().onecmd("update User " + id)
         self.assertEqual(f.getvalue(), '** attribute name missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("update User " + id + "name")
+            HBNBCommand().onecmd("update User " + id + " name")
         self.assertEqual(f.getvalue(), '** value missing **\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("update User " + id + " name " + "betty")
+        self.assertEqual(f.getvalue(), '')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("update User " + id + " name " + "betty")
+        self.assertEqual(f.getvalue(), '')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("asdasd.update()".format(id))
+        self.assertEqual(f.getvalue(), '** class doesn\'t exist **\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("User.update()".format(id))
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("User.update(\"{}\")".format(id))
+        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("User.update(\"{}\", \"name\")".format(id))
+        self.assertEqual(f.getvalue(), '** value missing **\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("User.update(\"{}\", \'name\')".format(id))
+        self.assertEqual(f.getvalue(), '** value missing **\n')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("User.update(\"{}\", \'name\', \"Betty\")".
+                                 format(id))
+        self.assertEqual(f.getvalue(), '')
+        with patch('sys.stdout', new=StringIO()) as f:
+            a = "User.update(\"{}\", \'name\', \"Betty Holberton\")".format(id)
+            HBNBCommand().onecmd(a)
+        self.assertEqual(f.getvalue(), '')
 
 if __name__ == '__main__':
     unittest.main()

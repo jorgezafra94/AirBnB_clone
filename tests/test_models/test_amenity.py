@@ -19,7 +19,7 @@ class TestAmenity(unittest.TestCase):
 
     def test_subclass_instance_User(self):
         """ Test if my_model 1 and 2 are subclasses of BaseModel """
-        self.isInstance(self.model, Amenity)
+        self.assertIsInstance(self.model, Amenity)
 
     def test_attribute_name(self):
         """ Check name """

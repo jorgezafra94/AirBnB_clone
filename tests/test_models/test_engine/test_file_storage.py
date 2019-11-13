@@ -88,5 +88,15 @@ class FileStorageTest(unittest.TestCase):
         for key in new:
             self.assertEqual(var1[key], new[key])
 
+    def test_new(self):
+        """testing change len """
+        storage = FileStorage()
+        l1 = len(storage.all())
+        new = BaseModel()
+        storage.save()
+        storage.reload()
+        l2 = len(storage.all())
+        self.assertEqual(l1, l2 - 1)
+
 if __name__ == '__main__':
     unittest.main()

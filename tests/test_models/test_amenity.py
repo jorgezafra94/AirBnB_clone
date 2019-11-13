@@ -7,7 +7,6 @@ x
 from models.amenity import Amenity
 import datetime
 import unittest
-from models.base_model import BaseModel
 
 
 class TestAmenity(unittest.TestCase):

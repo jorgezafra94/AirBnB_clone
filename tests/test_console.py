@@ -19,16 +19,35 @@ from models.engine.file_storage import FileStorage
 
 
 class TestUser(unittest.TestCase):
-    """ Test User Class """
-    try:
-        os.remove("file.json")
-    except:
-        pass
+
+    def tearDown(self):
+        """Remove temporary file (file.json) created as a result"""
+        try:
+            os.remove("../file.json")
+        except Exception:
+            pass
+
+    def test_docstrings_in_console(self):
+        """checking for docstrings"""
+        self.assertIsNotNone(console.__doc__)
+        self.assertIsNotNone(HBNBCommand().do_EOF.__doc__)
+        self.assertIsNotNone(HBNBCommand().do_quit.__doc__)
+        self.assertIsNotNone(HBNBCommand().emptyline.__doc__)
+        self.assertIsNotNone(HBNBCommand().do_create.__doc__)
+        self.assertIsNotNone(HBNBCommand().do_show.__doc__)
+        self.assertIsNotNone(HBNBCommand().do_destroy.__doc__)
+        self.assertIsNotNone(HBNBCommand().do_all.__doc__)
+        self.assertIsNotNone(HBNBCommand().do_update.__doc__)
+        self.assertIsNotNone(HBNBCommand().do_count.__doc__)
+        self.assertIsNotNone(HBNBCommand().default.__doc__)
 
     def test_press_enter(self):
         """When press enter no action has to been executed"""
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("\n")
+        self.assertEqual(f.getvalue(), '')
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("            \n")
         self.assertEqual(f.getvalue(), '')
 
     def test_wrong_command(self):
@@ -63,6 +82,14 @@ class TestUser(unittest.TestCase):
 
     def test_count(self):
         """Validate create method"""
+        try:
+            os.remove("file.json")
+        except:
+            pass
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create User")
+            HBNBCommand().onecmd("create BaseModel")
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("User.count()")
         self.assertNotEqual(f.getvalue(), '')

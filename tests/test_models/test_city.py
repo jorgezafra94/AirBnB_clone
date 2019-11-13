@@ -18,22 +18,22 @@ class TestCity(unittest.TestCase):
 
     def test_subclass_instance_User(self):
         """Test if my_model 1 and 2 are subclasses of BaseModel"""
-        self.assertTrue(isinstance(self.model, City))
+        self.assertEqual(isinstance(self.model, City), True)
 
     def test_attribute_state_id(self):
         """ Tests email """
-        self.assertTrue(hasattr(self.model, 'state_id'))
+        self.assertEqual(hasattr(self.model, 'state_id'), True)
 
     def test_attribute_name(self):
         """ Test password """
-        self.assertTrue(hasattr(self.model, 'name'))
+        self.assertEqual(hasattr(self.model, 'name'), True)
 
     def test_hasattr(self):
         """ attributes inheritated of BaseModel"""
-        self.assertTrue(hasattr(self.model, 'name'))
-        self.assertTrue(hasattr(self.model, 'id'))
-        self.assertTrue(hasattr(self.model, 'created_at'))
-        self.assertTrue(hasattr(self.model, 'updated_at'))
+        self.assertEqual(hasattr(self.model, 'name'), True)
+        self.assertEqual(hasattr(self.model, 'id'), True)
+        self.assertEqual(hasattr(self.model, 'created_at'), True)
+        self.assertEqual(hasattr(self.model, 'updated_at'), True)
 
     def test_attributes_types(self):
         """Tests types """

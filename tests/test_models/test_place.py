@@ -18,58 +18,58 @@ class TestPlace(unittest.TestCase):
 
     def test_subclass_instance(self):
         """Test if my_model 1 and 2 are subclasses of BaseModel"""
-        self.assertTrue(isinstance(self.model, Place))
+        self.assertEqual(isinstance(self.model, Place), True)
 
     def test_attribute_city_id(self):
         """ Tests city_id """
-        self.assertTrue(hasattr(self.model, 'city_id'))
+        self.assertEqual(hasattr(self.model, 'city_id'), True)
 
     def test_attribute_user_id(self):
         """ Test user_id """
-        self.assertTrue(hasattr(self.model, 'user_id'))
+        self.assertEqual(hasattr(self.model, 'user_id'), True)
 
     def test_attribute_name(self):
         """ Check name """
-        self.assertTrue(hasattr(self.model, 'name'))
+        self.assertEqual(hasattr(self.model, 'name'), True)
 
     def test_attribute_description(self):
         """Check description"""
-        self.assertTrue(hasattr(self.model, 'description'))
+        self.assertEqual(hasattr(self.model, 'description'), True)
 
     def test_attribute_number_rooms(self):
         """Check number_rooms"""
-        self.assertTrue(hasattr(self.model, 'number_rooms'))
+        self.assertEqual(hasattr(self.model, 'number_rooms'), True)
 
     def test_attribute_number_bathrooms(self):
         """Check number_bathrooms"""
-        self.assertTrue(hasattr(self.model, 'number_bathrooms'))
+        self.assertEqual(hasattr(self.model, 'number_bathrooms'), True)
 
     def test_attribute_max_guest(self):
         """Check max_guest"""
-        self.assertTrue(hasattr(self.model, 'max_guest'))
+        self.assertEqual(hasattr(self.model, 'max_guest'), True)
 
     def test_attribute_price_by_night(self):
         """Check price_by_night"""
-        self.assertTrue(hasattr(self.model, 'price_by_night'))
+        self.assertEqual(hasattr(self.model, 'price_by_night'), True)
 
     def test_attribute_latitude(self):
         """Check latitude"""
-        self.assertTrue(hasattr(self.model, 'latitude'))
+        self.assertEqual(hasattr(self.model, 'latitude'), True)
 
     def test_attribute_longitude(self):
         """Check longitude"""
-        self.assertTrue(hasattr(self.model, 'longitude'))
+        self.assertEqual(hasattr(self.model, 'longitude'), True)
 
     def test_attribute_amenity_ids(self):
         """Check amenity_ids"""
-        self.assertTrue(hasattr(self.model, 'amenity_ids'))
+        self.assertEqual(hasattr(self.model, 'amenity_ids'), True)
 
     def test_hasattr(self):
         """ attributes inheritated of BaseModel"""
-        self.assertTrue(hasattr(self.model, 'name'))
-        self.assertTrue(hasattr(self.model, 'id'))
-        self.assertTrue(hasattr(self.model, 'created_at'))
-        self.assertTrue(hasattr(self.model, 'updated_at'))
+        self.assertEqual(hasattr(self.model, 'name'), True)
+        self.assertEqual(hasattr(self.model, 'id'), True)
+        self.assertEqual(hasattr(self.model, 'created_at'), True)
+        self.assertEqual(hasattr(self.model, 'updated_at'), True)
 
 if __name__ == '__main__':
     unittest.main()

@@ -18,26 +18,26 @@ class TestReview(unittest.TestCase):
 
     def test_subclass_instance_Review(self):
         """Test if my_model 1 and 2 are subclasses of BaseModel"""
-        self.assertTrue(isinstance(self.model, Review))
+        self.assertEqual(isinstance(self.model, Review), True)
 
     def test_attribute_place_id(self):
         """ Tests place id """
-        self.assertTrue(hasattr(self.model, 'place_id'))
+        self.assertEqual(hasattr(self.model, 'place_id'), True)
 
     def test_attribute_user_id(self):
-        """ Test user id """
-        self.assertTrue(hasattr(self.model, 'user_id'))
+        """ Test place id """
+        self.assertEqual(hasattr(self.model, 'user_id'), True)
 
     def test_attribute_text(self):
         """ Check text """
-        self.assertTrue(hasattr(self.model, 'text'))
+        self.assertEqual(hasattr(self.model, 'text'), True)
 
     def test_hasattr(self):
         """ attributes inheritated of BaseModel"""
-        self.assertTrue(hasattr(self.model, 'name'))
-        self.assertTrue(hasattr(self.model, 'id'))
-        self.assertTrue(hasattr(self.model, 'created_at'))
-        self.assertTrue(hasattr(self.model, 'updated_at'))
+        self.assertEqual(hasattr(self.model, 'name'), True)
+        self.assertEqual(hasattr(self.model, 'id'), True)
+        self.assertEqual(hasattr(self.model, 'created_at'), True)
+        self.assertEqual(hasattr(self.model, 'updated_at'), True)
 
     def test_attributes_types(self):
         """Tests types """

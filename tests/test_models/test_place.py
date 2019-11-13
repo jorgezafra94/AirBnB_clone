@@ -16,7 +16,7 @@ class TestPlace(unittest.TestCase):
 
     def test_instance(self):
         """Test if my_model 1 and 2 are subclasses of BaseModel"""
-        self.assertTrue(isinstance(self.model, Place))
+        self.assertIsInstance(self.model, Place)
 
     def test_attribute_city_id(self):
         """ Tests attributes """
@@ -31,6 +31,20 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(hasattr(self.model, "latitude"), True)
         self.assertEqual(hasattr(self.model, "longitude"), True)
         self.assertEqual(hasattr(self.model, "amenity_ids"), True)
+
+    def test_type(self):
+        """ test type """
+        self.assertEqual(type(self.model.city_id), str)
+        self.assertEqual(type(self.model.user_id), str)
+        self.assertEqual(type(self.model.name), str)
+        self.assertEqual(type(self.model.description), str)
+        self.assertEqual(type(self.model.number_rooms), int)
+        self.assertEqual(type(self.model.number_bathrooms), int)
+        self.assertEqual(type(self.model.max_guest), int)
+        self.assertEqual(type(self.model.price_by_night), int)
+        self.assertEqual(type(self.model.latitude), float)
+        self.assertEqual(type(self.model.longitude), float)
+        self.assertEqual(type(self.model.amenity_ids), list)
 
 if __name__ == '__main__':
     unittest.main()

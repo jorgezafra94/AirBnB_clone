@@ -4,7 +4,6 @@
 from models.state import State
 import datetime
 import unittest
-from models.base_model import BaseModel
 
 
 class TestUser(unittest.TestCase):

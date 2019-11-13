@@ -4,7 +4,6 @@
 from models.place import Place
 import datetime
 import unittest
-from models.base_model import BaseModel
 
 
 class TestPlace(unittest.TestCase):

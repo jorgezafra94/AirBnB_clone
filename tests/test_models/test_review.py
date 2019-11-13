@@ -4,7 +4,6 @@
 from models.review import Review
 import datetime
 import unittest
-from models.base_model import BaseModel
 
 
 class TestReview(unittest.TestCase):

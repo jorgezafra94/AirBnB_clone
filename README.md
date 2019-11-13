@@ -1,4 +1,4 @@
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUXW7JF5MT%2F20191112%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20191112T225437Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=ec34fc29f3a2ec4e194de9ba80cb5132e3d464d9e6b88bd252231eb45a515206)
+![](https://github.com/Haroldov/AirBnB_clone/blob/master/images/hbnb_logo.png)
 
 # README CLONE ARBNB
 ## Description 

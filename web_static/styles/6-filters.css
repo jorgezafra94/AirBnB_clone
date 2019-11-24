@@ -38,6 +38,7 @@ section.filters {
     float: left;
     height: 100%;
     width: 25%;
+    padding-left:50px;
     position: relative;
 }
 
@@ -50,7 +51,6 @@ section.filters {
     /*give 5px margin and 50px for visualization*/
     font-weight: 600;
     margin-bottom: 5px;
-    margin-left: 50px;
 }
 
 .filters .locations h4,
@@ -58,7 +58,7 @@ section.filters {
     font-weight: 400;
     font-size: 14px;
     /*margin for visualization also*/
-    margin: 0px 0px 14px 50px;
+    margin: 0px 0px 14px 0px;
 }
 
 .filters .locations .popover,
@@ -69,13 +69,13 @@ section.filters {
     width: 100%;
     margin: 0px;
     padding: 0px;
+    right: 0px;
     list-style-type: none;
     display: none;
     background: #FAFAFA;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     z-index: 1;
-
 }
 
 .filters .locations:hover .popover,

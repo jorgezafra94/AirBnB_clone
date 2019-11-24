@@ -15,10 +15,11 @@
     margin: 20px;
     border: 1px solid #FF5A5F;
     border-radius: 4px;
-    display: flex;
-    justify-content: center;
+    flex-flow: column;
 }
 
 .places article h2 {
+    margin: 0 auto 15px;
+    text-align: center;
     font-size: 30px;
 }

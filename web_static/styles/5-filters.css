@@ -38,6 +38,7 @@ section.filters {
     float: left;
     height: 100%;
     width: 25%;
+    padding-left: 50px;
 }
 
 .filters .locations {
@@ -49,7 +50,6 @@ section.filters {
     /*give 5px margin and 50px for visualization*/
     font-weight: 600;
     margin-bottom: 5px;
-    margin-left: 50px;
 }
 
 .filters .locations h4,
@@ -57,5 +57,5 @@ section.filters {
     font-weight: 400;
     font-size: 14px;
     /*margin for visualization also*/
-    margin: 0px 0px 14px 50px;
+    margin: 0px 0px 14px;
 }
